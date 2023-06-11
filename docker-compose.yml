@@ -1,0 +1,15 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+
+  test:
+    profiles:
+      - testing
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
