@@ -1,4 +1,4 @@
-FROM python:3.11.4-slim-buster as osbase
+FROM python:3.11.4-slim-buster AS osbase
 
 RUN apt-get update && \
     apt-get upgrade --yes && \
@@ -8,7 +8,7 @@ RUN useradd --create-home fastapi
 USER fastapi
 WORKDIR /home/fastapi
 
-FROM osbase as pythonbase
+FROM osbase AS pythonbase
 
 ENV VIRTUALENV=/home/fastapi/venv
 RUN python3 -m venv $VIRTUALENV
@@ -18,7 +18,7 @@ COPY --chown=fastapi:fastapi requirements.txt .
 RUN pip install --upgrade pip setuptools && \
     pip install --no-cache-dir -r requirements.txt
 
-FROM pythonbase as builder
+FROM pythonbase AS builder
 
 COPY --chown=fastapi:fastapi requirements-dev.txt ./
 RUN pip install --no-cache-dir -r requirements-dev.txt
@@ -34,7 +34,7 @@ RUN python -m pip install . && \
     python -m bandit -r src/ --quiet && \
     python -m pip wheel --wheel-dir dist/ . -r requirements.txt
 
-FROM pythonbase as app
+FROM pythonbase AS app
 
 COPY --chown=fastapi:fastapi --from=builder /home/fastapi/dist/feather*.whl /home/fastapi/
 
