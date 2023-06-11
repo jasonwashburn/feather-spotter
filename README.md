@@ -1,5 +1,6 @@
 # Feather Spotter
 
+[![Continuous Integration](https://github.com/jasonwashburn/feather-spotter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jasonwashburn/feather-spotter/actions/workflows/ci.yml)
 -----
 
 **Table of Contents**
