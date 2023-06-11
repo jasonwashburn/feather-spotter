@@ -4,17 +4,9 @@ on:
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - "**/README.md"
-      - "**/LICENSE.txt"
-      - ".vscode/*"
   push:
     branches:
       - main
-    paths-ignore:
-      - "**/README.md"
-      - "**/LICENSE.txt"
-      - ".vscode/*"
 jobs:
   build:
     name: Build Docker image and run end-to-end tests
