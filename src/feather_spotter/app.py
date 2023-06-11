@@ -1,7 +1,10 @@
 """Implements FastAPI application for Feather Spotter."""
+import io
 import logging
 
+import numpy as np
 from fastapi import FastAPI, HTTPException, UploadFile
+from PIL import Image
 
 from feather_spotter.__about__ import __version__ as version
 from feather_spotter.detection import Detection, detect
@@ -44,5 +47,8 @@ async def upload_file(
             status_code=404,
             detail="File name is missing.",
         )
-    detections = detect(file.filename)
+    # load jpeg or png file from file.file as numpy ndarray
+    image = file.file.read()
+    image_array = np.array(Image.open(io.BytesIO(image)))
+    detections = detect(image_array)
     return {"results": detections}

@@ -1,5 +1,6 @@
 """Iplelements detection functionality of the Feather Spotter application."""
 import numpy as np
+from numpy.typing import NDArray
 from pydantic import BaseModel
 from ultralytics import YOLO
 from ultralytics.yolo.engine.results import Boxes
@@ -48,7 +49,7 @@ def parse_detections(
     return detections
 
 
-def detect(image: str) -> list[Detection]:
+def detect(image: NDArray) -> list[Detection]:
     """Detects objects in an image.
 
     Args:

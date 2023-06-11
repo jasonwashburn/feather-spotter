@@ -1,4 +1,6 @@
 """Implements tests for Feather Spotter FastAPI application."""
+from pathlib import Path
+
 from fastapi.testclient import TestClient
 from pytest_mock import MockerFixture
 
@@ -31,7 +33,9 @@ def test_upload_file(mocker: MockerFixture) -> None:
             ),
         ],
     )
-    response = client.post("/detect", files={"file": ("mock.jpg", b"mocked")})
+    sample_path = Path("tests/test-files/sample1.jpg")
+    with Path.open(sample_path, "rb") as image:
+        response = client.post("/detect", files={"file": ("sample1.jpg", image)})
     assert response.status_code == 200
     assert response.json() == {
         "results": [
