@@ -27,6 +27,22 @@ dependencies = [
   "pillow",
   "fastapi",
   "uvicorn",
+  "python-multipart",
+]
+
+[project.optional-dependencies]
+dev = [
+  "coverage[toml]>=6.5",
+  "httpx",
+  "pytest",
+  "pytest-mock",
+  "ruff",
+  "black",
+  "pre-commit",
+  "mypy",
+  "ipykernel",
+  "pip-tools",
+  "bandit",
 ]
 
 [project.urls]
@@ -48,6 +64,8 @@ dependencies = [
   "pre-commit",
   "mypy",
   "ipykernel",
+  "pip-tools",
+  "bandit",
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
