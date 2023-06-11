@@ -1,4 +1,4 @@
-FROM python:3.11.3-slim-buster as osbase
+FROM python:3.11.4-slim-buster as osbase
 
 RUN apt-get update && \
     apt-get upgrade --yes && \
