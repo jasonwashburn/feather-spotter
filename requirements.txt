@@ -16,7 +16,7 @@ contourpy==1.0.7
     # via matplotlib
 cycler==0.11.0
     # via matplotlib
-fastapi==0.96.1
+fastapi==0.97.0
     # via feather_spotter (pyproject.toml)
 filelock==3.12.1
     # via torch
