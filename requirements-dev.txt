@@ -281,7 +281,7 @@ typing-extensions==4.6.3
     #   torch
 tzdata==2023.3
     # via pandas
-ultralytics==8.0.115
+ultralytics==8.0.116
     # via feather_spotter (pyproject.toml)
 urllib3==2.0.3
     # via requests
