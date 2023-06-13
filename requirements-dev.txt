@@ -52,7 +52,7 @@ distlib==0.3.6
     # via virtualenv
 executing==1.2.0
     # via stack-data
-fastapi==0.96.1
+fastapi==0.97.0
     # via feather_spotter (pyproject.toml)
 filelock==3.12.1
     # via
