@@ -1,40 +1,19 @@
-"""Implements FastAPI application for Feather Spotter."""
+"""Implements detect endpoint for Feather Spotter."""
 import io
 import logging
 
 import numpy as np
-from fastapi import FastAPI, HTTPException, UploadFile
+from fastapi import APIRouter, HTTPException, UploadFile
 from PIL import Image
 
-from feather_spotter.__about__ import __version__ as version
-from feather_spotter.database import init_db
 from feather_spotter.detection import detect
 from feather_spotter.models.bird_detection import UpdateBirdDetection
-from feather_spotter.routes.detect import router
 
+router = APIRouter()
 logger = logging.getLogger("app")
 
-app = FastAPI()
-app.include_router(router, tags=["Detect"], prefix="/detect")
 
-
-@app.on_event("startup")
-async def start_db() -> None:
-    """Starts the database connection."""
-    await init_db()
-
-
-@app.get("/")
-def root() -> dict[str, str]:
-    """Root endpoint for Feather Spotter.
-
-    Returns:
-        dict[str, str]: Welcome message and version number.
-    """
-    return {"message": "Welcome to Feather Spotter!", "version": version}
-
-
-@app.post("/detect")
+@router.post("/")
 async def upload_file(
     file: UploadFile,
 ) -> dict[str, list[UpdateBirdDetection]]:

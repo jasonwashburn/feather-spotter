@@ -1,11 +1,12 @@
 """Implements tests for Feather Spotter FastAPI application."""
+from datetime import UTC, datetime
 from pathlib import Path
 
 from fastapi.testclient import TestClient
 from pytest_mock import MockerFixture
 
 from feather_spotter.app import app
-from feather_spotter.detection import Detection
+from feather_spotter.models.bird_detection import UpdateBirdDetection
 
 client = TestClient(app)
 
@@ -25,11 +26,19 @@ def test_upload_file(mocker: MockerFixture) -> None:
     mocker.patch(
         "feather_spotter.app.detect",
         return_value=[
-            Detection(
-                index=0,
-                name="mock",
-                confidence=100.0,
+            UpdateBirdDetection(
+                timestamp=datetime(2021, 1, 1, tzinfo=UTC),
+                species="mock-species",
+                detection_confidence=100.0,
+                species_confidence=100.0,
                 box=(0, 0, 0, 0),
+                trimmed_image_location="s3://mock/mock.jpg",
+                orig_image_location="s3://mock/mock.jpg",
+                client_name="mock-client",
+                geographical_location={
+                    "lat": 41.8781,
+                    "lon": 87.6298,
+                },
             ),
         ],
     )
@@ -39,6 +48,19 @@ def test_upload_file(mocker: MockerFixture) -> None:
     assert response.status_code == 200
     assert response.json() == {
         "results": [
-            {"index": 0, "name": "mock", "confidence": 100.0, "box": [0, 0, 0, 0]},
+            {
+                "timestamp": "2021-01-01T00:00:00+00:00",
+                "species": "mock-species",
+                "detection_confidence": 100.0,
+                "species_confidence": 100.0,
+                "box": [0, 0, 0, 0],
+                "trimmed_image_location": "s3://mock/mock.jpg",
+                "orig_image_location": "s3://mock/mock.jpg",
+                "client_name": "mock-client",
+                "geographical_location": {
+                    "lat": 41.8781,
+                    "lon": 87.6298,
+                },
+            },
         ],
     }
