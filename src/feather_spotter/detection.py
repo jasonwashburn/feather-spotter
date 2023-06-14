@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from ultralytics import YOLO
 from ultralytics.yolo.engine.results import Boxes
 
-from feather_spotter.models.bird_detection import UpdateBirdDetection
+from feather_spotter.models.bird_detection import BirdDetection
 
 
 class Detection(BaseModel):
@@ -31,7 +31,7 @@ class Detection(BaseModel):
 def parse_detections(
     boxes: Boxes,
     names: dict[int, str],
-) -> list[UpdateBirdDetection]:
+) -> list[BirdDetection]:
     """Parses detection results into a list of dictionaries."""
     detections = []
     for _index, box in enumerate(boxes):
@@ -43,7 +43,7 @@ def parse_detections(
         confidence = round(float(flat_box[4]), 4) * 100
         name = names.get(name_index)
         detections.append(
-            UpdateBirdDetection(
+            BirdDetection(
                 timestamp=datetime.datetime.now(tz=datetime.UTC),
                 species=name,
                 detection_confidence=confidence,
@@ -61,7 +61,7 @@ def parse_detections(
     return detections
 
 
-def detect(image: NDArray) -> list[UpdateBirdDetection]:
+def detect(image: NDArray) -> list[BirdDetection]:
     """Detects objects in an image.
 
     Args:

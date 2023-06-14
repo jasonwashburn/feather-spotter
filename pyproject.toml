@@ -37,6 +37,7 @@ dev = [
   "httpx",
   "pytest",
   "pytest-mock",
+  "pytest-asyncio",
   "ruff",
   "black",
   "pre-commit",
@@ -44,6 +45,7 @@ dev = [
   "ipykernel",
   "pip-tools",
   "bandit",
+  "mongomock-motor"
 ]
 
 [project.urls]
@@ -60,6 +62,7 @@ dependencies = [
   "httpx",
   "pytest",
   "pytest-mock",
+  "pytest-asyncio",
   "ruff",
   "black",
   "pre-commit",
@@ -67,6 +70,7 @@ dependencies = [
   "ipykernel",
   "pip-tools",
   "bandit",
+  "mongomock-motor"
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"

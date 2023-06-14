@@ -23,4 +23,4 @@ async def init_db() -> None:
     )
 
     # Initialize beanie with the Product document class and a database
-    await init_beanie(database=client.db_name, document_models=(BirdDetection))
+    await init_beanie(database=client.db_name, document_models=[BirdDetection])
