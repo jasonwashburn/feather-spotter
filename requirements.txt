@@ -6,16 +6,22 @@
 #
 anyio==3.7.0
     # via starlette
+beanie==1.19.2
+    # via feather_spotter (pyproject.toml)
 certifi==2023.5.7
     # via requests
 charset-normalizer==3.1.0
     # via requests
 click==8.1.3
-    # via uvicorn
+    # via
+    #   beanie
+    #   uvicorn
 contourpy==1.0.7
     # via matplotlib
 cycler==0.11.0
     # via matplotlib
+dnspython==2.3.0
+    # via pymongo
 fastapi==0.97.0
     # via feather_spotter (pyproject.toml)
 filelock==3.12.1
@@ -32,12 +38,16 @@ jinja2==3.1.2
     # via torch
 kiwisolver==1.4.4
     # via matplotlib
+lazy-model==0.0.5
+    # via beanie
 markupsafe==2.1.3
     # via jinja2
 matplotlib==3.7.1
     # via
     #   seaborn
     #   ultralytics
+motor==3.1.2
+    # via beanie
 mpmath==1.3.0
     # via sympy
 networkx==3.1
@@ -69,7 +79,12 @@ pillow==9.5.0
 psutil==5.9.5
     # via ultralytics
 pydantic==1.10.9
-    # via fastapi
+    # via
+    #   beanie
+    #   fastapi
+    #   lazy-model
+pymongo==4.3.3
+    # via motor
 pyparsing==3.0.9
     # via matplotlib
 python-dateutil==2.8.2
@@ -98,6 +113,8 @@ starlette==0.27.0
     # via fastapi
 sympy==1.12
     # via torch
+toml==0.10.2
+    # via beanie
 torch==2.0.1
     # via
     #   feather_spotter (pyproject.toml)

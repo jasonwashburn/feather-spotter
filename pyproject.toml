@@ -28,6 +28,7 @@ dependencies = [
   "fastapi",
   "uvicorn",
   "python-multipart",
+  "beanie",
 ]
 
 [project.optional-dependencies]
@@ -36,6 +37,7 @@ dev = [
   "httpx",
   "pytest",
   "pytest-mock",
+  "pytest-asyncio",
   "ruff",
   "black",
   "pre-commit",
@@ -43,6 +45,7 @@ dev = [
   "ipykernel",
   "pip-tools",
   "bandit",
+  "mongomock-motor"
 ]
 
 [project.urls]
@@ -59,6 +62,7 @@ dependencies = [
   "httpx",
   "pytest",
   "pytest-mock",
+  "pytest-asyncio",
   "ruff",
   "black",
   "pre-commit",
@@ -66,13 +70,17 @@ dependencies = [
   "ipykernel",
   "pip-tools",
   "bandit",
+  "mongomock-motor"
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
 cov-report = ["- coverage combine", "coverage report"]
 cov = ["test-cov", "cov-report"]
-update-deps = ["pip-compile -o requirements.txt", "pip-compile --extra=dev -o requirements-dev.txt"]
+update-deps = [
+  "pip-compile -o requirements.txt",
+  "pip-compile --extra=dev -o requirements-dev.txt",
+]
 
 [[tool.hatch.envs.all.matrix]]
 python = ["3.10", "3.11"]

@@ -13,11 +13,9 @@ def test_parse_detections() -> None:
     names = {0: "mock_0", 1: "mock_1"}
     detections = parse_detections(boxes, names)
     assert len(detections) == 2
-    assert detections[0].name == "mock_0"
-    assert detections[0].confidence == 90.0
-    assert detections[0].index == 0
+    assert detections[0].species == "mock_0"
+    assert detections[0].detection_confidence == 90.0
+    assert detections[1].species == "mock_1"
+    assert detections[1].detection_confidence == 80.0
     assert detections[0].box == (0, 1, 2, 3)
-    assert detections[1].name == "mock_1"
-    assert detections[1].confidence == 80.0
-    assert detections[1].index == 1
     assert detections[1].box == (4, 5, 6, 7)

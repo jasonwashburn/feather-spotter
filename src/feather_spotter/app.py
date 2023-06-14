@@ -7,11 +7,19 @@ from fastapi import FastAPI, HTTPException, UploadFile
 from PIL import Image
 
 from feather_spotter.__about__ import __version__ as version
-from feather_spotter.detection import Detection, detect
+from feather_spotter.database import init_db
+from feather_spotter.detection import detect
+from feather_spotter.models.bird_detection import BirdDetection
 
 logger = logging.getLogger("app")
 
 app = FastAPI()
+
+
+@app.on_event("startup")
+async def start_db() -> None:
+    """Starts the database connection."""
+    await init_db()
 
 
 @app.get("/")
@@ -27,7 +35,7 @@ def root() -> dict[str, str]:
 @app.post("/detect")
 async def upload_file(
     file: UploadFile,
-) -> dict[str, list[Detection]]:
+) -> dict[str, list[BirdDetection]]:
     """Implements upload_file endpoint for Feather Spotter.
 
     Args:
@@ -51,4 +59,7 @@ async def upload_file(
     image = file.file.read()
     image_array = np.array(Image.open(io.BytesIO(image)))
     detections = detect(image_array)
+    result = await BirdDetection.insert_many(detections)
+    logger.info("Inserted {count} records", extra={"count": len(result.inserted_ids)})
+
     return {"results": detections}
