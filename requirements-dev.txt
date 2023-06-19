@@ -210,7 +210,7 @@ pygments==2.15.1
     #   rich
 pymongo==4.3.3
     # via motor
-pyparsing==3.0.9
+pyparsing==3.1.0
     # via matplotlib
 pyproject-hooks==1.0.0
     # via build
