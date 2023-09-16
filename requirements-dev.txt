@@ -286,7 +286,7 @@ torchvision==0.15.2
     # via
     #   feather_spotter (pyproject.toml)
     #   ultralytics
-tornado==6.3.2
+tornado==6.3.3
     # via
     #   ipykernel
     #   jupyter-client
