@@ -245,7 +245,7 @@ requests==2.31.0
     # via
     #   torchvision
     #   ultralytics
-rich==13.4.1
+rich==13.5.3
     # via bandit
 ruff==0.0.272
     # via feather_spotter (pyproject.toml)
