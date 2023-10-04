@@ -70,7 +70,7 @@ pandas==2.0.2
     # via
     #   seaborn
     #   ultralytics
-pillow==9.5.0
+pillow==10.0.1
     # via
     #   feather_spotter (pyproject.toml)
     #   matplotlib
