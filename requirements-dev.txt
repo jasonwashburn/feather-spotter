@@ -67,7 +67,7 @@ fonttools==4.39.4
     # via matplotlib
 gitdb==4.0.10
     # via gitpython
-gitpython==3.1.35
+gitpython==3.1.40
     # via bandit
 h11==0.14.0
     # via
