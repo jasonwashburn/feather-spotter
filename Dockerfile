@@ -10,34 +10,36 @@ WORKDIR /home/fastapi
 
 FROM osbase AS pythonbase
 
-ENV VIRTUALENV=/home/fastapi/venv
-RUN python3 -m venv $VIRTUALENV
-ENV PATH="$VIRTUALENV/bin:$PATH"
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-COPY --chown=fastapi:fastapi requirements.txt .
-RUN pip install --upgrade pip setuptools && \
-    pip install --no-cache-dir -r requirements.txt
+# Copy dependency files
+COPY --chown=fastapi:fastapi pyproject.toml uv.lock ./
+
+# Install dependencies using uv
+RUN uv sync --frozen --no-cache
 
 FROM pythonbase AS builder
 
-COPY --chown=fastapi:fastapi requirements-dev.txt ./
-RUN pip install --no-cache-dir -r requirements-dev.txt
-
-COPY --chown=fastapi:fastapi pyproject.toml README.md LICENSE.txt ./
+# Copy source code
+COPY --chown=fastapi:fastapi README.md LICENSE.txt ./
 COPY --chown=fastapi:fastapi src/ src/
 COPY --chown=fastapi:fastapi tests/ tests/
 
-RUN python -m pip install . && \
-    python -m pytest tests/ && \
-    python -m ruff src/ && \
-    python -m black src/ --check && \
-    python -m bandit -r src/ --quiet && \
-    python -m pip wheel --wheel-dir dist/ . -r requirements.txt
+# Install the package and run tests
+RUN uv run python -m pip install . && \
+    uv run python -m pytest tests/ && \
+    uv run python -m ruff src/ && \
+    uv run python -m black src/ --check && \
+    uv run python -m bandit -r src/ --quiet && \
+    uv build --wheel
 
 FROM pythonbase AS app
 
+# Copy the built wheel from builder
 COPY --chown=fastapi:fastapi --from=builder /home/fastapi/dist/feather*.whl /home/fastapi/
 
-RUN pip install --no-cache-dir feather*.whl
+# Install the wheel
+RUN uv pip install --no-cache feather*.whl
 
-CMD ["uvicorn", "feather_spotter.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "uvicorn", "feather_spotter.app:app", "--host", "0.0.0.0", "--port", "8000"]

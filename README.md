@@ -21,10 +21,35 @@
 
 ## Table of Contents
 
+- [Development](#development)
 - [Build Container](#build-container)
 - [Run Container](#run-container)
 - [Testing](#testing)
 - [License](#license)
+
+## Development
+
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management. To get started:
+
+1. Install uv:
+```shell
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+2. Install dependencies:
+```shell
+uv sync --all-extras
+```
+
+3. Run tests:
+```shell
+uv run pytest tests/
+```
+
+4. Update dependencies:
+```shell
+uv lock
+```
 
 ## Build Container
 
