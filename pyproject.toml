@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = ''
 readme = "README.md"
 requires-python = ">=3.10"
-license = ""
+license = "MIT"
 keywords = []
 authors = [{ name = "Jason Washburn", email = "jason.washburn@gmail.com" }]
 classifiers = [
@@ -43,7 +43,6 @@ dev = [
   "pre-commit",
   "mypy",
   "ipykernel",
-  "pip-tools",
   "bandit",
   "mongomock-motor"
 ]
@@ -68,7 +67,6 @@ dependencies = [
   "pre-commit",
   "mypy",
   "ipykernel",
-  "pip-tools",
   "bandit",
   "mongomock-motor"
 ]
@@ -78,8 +76,7 @@ test-cov = "coverage run -m pytest {args:tests}"
 cov-report = ["- coverage combine", "coverage report"]
 cov = ["test-cov", "cov-report"]
 update-deps = [
-  "pip-compile -o requirements.txt",
-  "pip-compile --extra=dev -o requirements-dev.txt",
+  "uv lock",
 ]
 
 [[tool.hatch.envs.all.matrix]]

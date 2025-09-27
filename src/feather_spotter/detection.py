@@ -5,7 +5,7 @@ import numpy as np
 from numpy.typing import NDArray
 from pydantic import BaseModel
 from ultralytics import YOLO
-from ultralytics.yolo.engine.results import Boxes
+from ultralytics.engine.results import Boxes
 
 from feather_spotter.models.bird_detection import BirdDetection
 
